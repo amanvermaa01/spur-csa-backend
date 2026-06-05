@@ -19,6 +19,12 @@ app.use(cors({
 app.use(express.json());
 
 // Routes
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+});
 app.use('/api/chat', chatRoutes);
 app.use('/chat', chatRoutes);
 
