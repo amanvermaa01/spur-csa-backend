@@ -5,62 +5,68 @@ import app from '../src/app';
 // Mock dependencies to run tests without database connections or live LLM network requests
 vi.mock('../src/repositories/conversation.repository', () => {
   return {
-    ConversationRepository: vi.fn().mockImplementation(() => ({
-      create: vi.fn().mockResolvedValue({
-        id: '22222222-2222-2222-2222-222222222222',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }),
-      findById: vi.fn().mockImplementation((id) => {
-        if (id === '11111111-1111-1111-1111-111111111111') {
-          return Promise.resolve({
-            id: '11111111-1111-1111-1111-111111111111',
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            messages: [
-              {
-                id: 'msg-1',
-                conversationId: '11111111-1111-1111-1111-111111111111',
-                sender: 'USER',
-                content: 'Hello SpurMart',
-                createdAt: new Date(),
-              },
-              {
-                id: 'msg-2',
-                conversationId: '11111111-1111-1111-1111-111111111111',
-                sender: 'AI',
-                content: 'Hello, how can I help you?',
-                createdAt: new Date(),
-              },
-            ],
-          });
-        }
-        return Promise.resolve(null);
-      }),
-      exists: vi.fn().mockImplementation((id) => {
-        return Promise.resolve(id === '11111111-1111-1111-1111-111111111111');
-      }),
-    })),
+    ConversationRepository: vi.fn().mockImplementation(function (this: any) {
+      return {
+        create: vi.fn().mockResolvedValue({
+          id: '22222222-2222-2222-2222-222222222222',
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }),
+        findById: vi.fn().mockImplementation((id) => {
+          if (id === '11111111-1111-1111-1111-111111111111') {
+            return Promise.resolve({
+              id: '11111111-1111-1111-1111-111111111111',
+              createdAt: new Date(),
+              updatedAt: new Date(),
+              messages: [
+                {
+                  id: 'msg-1',
+                  conversationId: '11111111-1111-1111-1111-111111111111',
+                  sender: 'USER',
+                  content: 'Hello SpurMart',
+                  createdAt: new Date(),
+                },
+                {
+                  id: 'msg-2',
+                  conversationId: '11111111-1111-1111-1111-111111111111',
+                  sender: 'AI',
+                  content: 'Hello, how can I help you?',
+                  createdAt: new Date(),
+                },
+              ],
+            });
+          }
+          return Promise.resolve(null);
+        }),
+        exists: vi.fn().mockImplementation((id) => {
+          return Promise.resolve(id === '11111111-1111-1111-1111-111111111111');
+        }),
+      };
+    }),
   };
 });
 
 vi.mock('../src/repositories/message.repository', () => {
   return {
-    MessageRepository: vi.fn().mockImplementation(() => ({
-      create: vi.fn().mockResolvedValue({
-        id: 'msg-mock-id',
-        createdAt: new Date(),
-      }),
-      findRecentByConversationId: vi.fn().mockResolvedValue([]),
-    })),
+    MessageRepository: vi.fn().mockImplementation(function (this: any) {
+      return {
+        create: vi.fn().mockResolvedValue({
+          id: 'msg-mock-id',
+          createdAt: new Date(),
+        }),
+        findRecentByConversationId: vi.fn().mockResolvedValue([]),
+      };
+    }),
   };
 });
 
 vi.mock('../src/services/llm/llm.service', () => {
   return {
-    LLMService: vi.fn().mockImplementation(() => ({
-      generateReply: vi.fn().mockResolvedValue('Mocked response from AI'),
-    })),
+    LLMService: vi.fn().mockImplementation(function (this: any) {
+      return {
+        generateReply: vi.fn().mockResolvedValue('Mocked response from AI'),
+      };
+    }),
   };
 });
 

@@ -10,11 +10,7 @@ dotenv.config();
 const app = express();
 
 // Middlewares
-app.use(cors({
-  origin: '*', // For development flexibility, can lock down to frontend origin later
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type'],
-}));
+app.use(cors());
 
 app.use(express.json());
 
