@@ -20,7 +20,7 @@ export class GeminiProvider implements LLMProvider {
   async generateReply(messages: LLMMessage[], systemInstruction?: string): Promise<string> {
     const client = this.getClient();
     const model = client.getGenerativeModel({
-      model: 'gemini-3-flash',
+      model: 'gemini-2.5-flash',
       systemInstruction: systemInstruction,
     });
 
